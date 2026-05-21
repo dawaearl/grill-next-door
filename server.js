@@ -8,21 +8,18 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
-//app.use(cors());
 
 // ==========================================================================
-// Configured CORS Middleware for Live Production
+// Bulletproof CORS Middleware
 // ==========================================================================
 app.use(cors({
-    origin: [
-        'https://grill-next-door-1.onrender.com', // Your live frontend URL
-        'http://localhost:8000',                 // Local fallback development
-        'http://127.0.0.1:8000'
-    ],
+    origin: '*', // Allows all origins to bypass the strict preflight check
     methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Must be placed BEFORE app.use(express.json())
+app.use(express.json());
 
 // Handle preflight OPTIONS requests explicitly (Fixes the exact error in your log)
 app.options('*', cors());
