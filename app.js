@@ -382,7 +382,7 @@ function renderMenu(category) {
 
 const API_BASE_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
     ? "http://localhost:8000"
-    : "";
+    : "https://grill-next-door.onrender.com";
 
 const LOCATION_SESSIONS = {
     "The Hidden Alley": {
