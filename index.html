@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Step into Grill next Door—your neighborhood’s best kept secret. An intimate, high-end speakeasy grillhouse offering wood-fired fine dining and craft smoked cocktails.">
+    <title>Grill next Door | Speakeasy Grillhouse & Fine Dining</title>
+
+    <!-- Google Fonts: Cormorant Garamond (Serif) & Inter (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.js"></script>
+</head>
+
+<body class="storefront-mode">
+    <!-- Ambient Embers for Speakeasy Mode -->
+    <div class="ember-container" id="ember-container"></div>
+
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <span class="logo-cozy">Grill <span class="logo-accent-cozy">next Door</span></span>
+                <span class="logo-speakeasy">GND <span class="logo-accent-speakeasy">Speakeasy</span></span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#concept">Our Secret</a>
+                <a href="#menu">The Menu</a>
+                <a href="#branches">Locations</a>
+                <a href="#reservation" class="nav-cta-btn">Book a Table</a>
+            </nav>
+
+            <!-- Speakeasy Mode Switch (Desktop View) -->
+            <div class="speakeasy-toggle-wrapper desktop-only">
+                <span class="toggle-label text-cozy">Cozy Mode</span>
+                <button class="toggle-btn speakeasy-toggle" aria-label="Toggle Speakeasy Mode">
+                    <span class="toggle-slider"></span>
+                </button>
+                <span class="toggle-label text-speakeasy">Speakeasy</span>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav" id="mobile-nav">
+            <a href="#concept">Our Secret</a>
+            <a href="#menu">The Menu</a>
+            <a href="#branches">Locations</a>
+            <a href="#reservation" class="mobile-cta-btn">Book a Table</a>
+
+            <!-- Speakeasy Mode Switch (Mobile View) -->
+            <div class="speakeasy-toggle-wrapper mobile-only">
+                <span class="toggle-label text-cozy">Cozy Mode</span>
+                <button class="toggle-btn speakeasy-toggle" aria-label="Toggle Speakeasy Mode">
+                    <span class="toggle-slider"></span>
+                </button>
+                <span class="toggle-label text-speakeasy">Speakeasy</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <!-- Hero Background Images for Crossfade -->
+        <div class="hero-bg bg-cozy active"></div>
+        <div class="hero-bg bg-speakeasy"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <span class="hero-subtitle cozy-text">Welcome to your local grillhouse</span>
+            <span class="hero-subtitle speakeasy-text">Step behind the curtain</span>
+
+            <h1 class="hero-title cozy-title">Grill next Door</h1>
+            <h1 class="hero-title speakeasy-title">Your Neighborhood’s<br><span class="highlight">Best Kept
+                    Secret</span></h1>
+
+            <p class="hero-desc cozy-desc">Serving premium cuts, comfort food, and warm stories in a cozy neighborhood
+                corner.</p>
+            <p class="hero-desc speakeasy-desc">An intimate, moody sanctuary of fire and flavor. Dry-aged wood-fired
+                steaks, charred delicacies, and smoked craft cocktails designed for unforgettable nights.</p>
+
+            <div class="hero-ctas">
+                <a href="#menu" class="btn btn-primary">
+                    <span>Explore Menu</span>
+                    <i data-lucide="arrow-right"></i>
+                </a>
+                <a href="#reservation" class="btn btn-secondary">
+                    <span>Book a Table</span>
+                </a>
+            </div>
+        </div>
+
+        <a href="#concept" class="scroll-indicator" aria-label="Scroll Down">
+            <i data-lucide="chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="concept-section" id="concept">
+        <div class="container">
+            <div class="concept-grid">
+                <div class="concept-image-container reveal-on-scroll">
+                    <!-- Images for visual transition -->
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+                        alt="Cozy Neighborhood Staple" class="img-transition img-cozy active">
+                    <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=800&q=80"
+                        alt="Moody Speakeasy Interior" class="img-transition img-speakeasy">
+                    <div class="concept-badge">
+                        <i data-lucide="flame" class="icon-speakeasy"></i>
+                        <span class="badge-text">Established 2026</span>
+                    </div>
+                </div>
+
+                <div class="concept-content reveal-on-scroll">
+                    <span class="section-tag">The Story</span>
+                    <h2 class="section-title cozy-title">Comfort in the Afternoon</h2>
+                    <h2 class="section-title speakeasy-title">A Symphony of Fire & Intimacy</h2>
+
+                    <div class="cozy-text-block">
+                        <p>By day, Grill next Door welcomes you with familiar warmth, serving as the neighborhood’s
+                            beloved local grill. It is a cozy corner filled with laughter, friendly faces, and comfort
+                            grill dishes that taste like home.</p>
+                        <p>But when the sun dips below the horizon, the atmosphere shifts. The front lights dim, a heavy
+                            curtain is drawn, and the true experience begins.</p>
+                    </div>
+
+                    <div class="speakeasy-text-block">
+                        <p>Welcome to our hidden room. Beyond the unassuming front lies an opulent, shadow-draped dining
+                            room lit by glowing embers and flickering candlelight. Here, chefs tame open flames in our
+                            central hearth to create culinary poetry.</p>
+                        <p>Designed specifically for couples, culinary enthusiasts, and close friends, this is a
+                            sanctuary where whispers are encouraged, and dining is elevated into an art form.</p>
+                    </div>
+
+                    <div class="concept-features">
+                        <div class="feature-item">
+                            <i data-lucide="heart" class="feature-icon"></i>
+                            <div>
+                                <h4>Intimate Seating</h4>
+                                <p>Deep velvet booths and secluded corners designed for date nights.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i data-lucide="flame" class="feature-icon"></i>
+                            <div>
+                                <h4>Open-Flame Hearth</h4>
+                                <p>Watch our master chefs grill over artisanal cherry oak embers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <div class="text-center reveal-on-scroll">
+                <span class="section-tag">Curated Selections</span>
+                <h2 class="section-title">The Culinary Offerings</h2>
+                <p class="section-subtitle">Exquisite wood-fired creations crafted with local ingredients and global
+                    techniques.</p>
+            </div>
+
+            <!-- Menu Tabs Navigation -->
+            <div class="menu-tabs reveal-on-scroll" id="menu-tabs">
+                <button class="menu-tab active" data-category="starters">Starters</button>
+                <button class="menu-tab" data-category="mains">Main Course</button>
+                <button class="menu-tab" data-category="desserts">Desserts</button>
+                <button class="menu-tab" data-category="cocktails">Signature Cocktails</button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Branches & Hours Section -->
+    <section class="branches-section" id="branches">
+        <div class="container">
+            <div class="text-center reveal-on-scroll">
+                <span class="section-tag">Find Us</span>
+                <h2 class="section-title">Our Hidden Locations</h2>
+                <p class="section-subtitle">Two distinct atmospheres, both operating under the same code of culinary
+                    excellence.</p>
+            </div>
+
+            <!-- Two-Column Location List -->
+            <div class="branches-grid reveal-on-scroll">
+                <!-- Location 1 -->
+                <div class="branch-card">
+                    <div class="branch-header">
+                        <i data-lucide="map-pin" class="branch-pin-icon"></i>
+                        <div>
+                            <h3>The Hidden Alley</h3>
+                            <p class="branch-addr">Kilmarnock Road, Kilimani, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="branch-content">
+                        <p class="branch-desc">Our flagship speakeasy, hidden behind a rustic wooden bookshelf at the
+                            back of the cozy day cafe. Featuring rich leather booths and a large open fireplace.</p>
+
+                        <div class="sessions-list">
+                            <div class="session-row">
+                                <span class="session-label">
+                                    <i data-lucide="sun" class="session-icon-sun"></i>
+                                    Lunch Session
+                                </span>
+                                <span class="session-time">12:00 PM - 3:30 PM</span>
+                            </div>
+                            <div class="session-row active-dinner">
+                                <span class="session-label">
+                                    <i data-lucide="moon" class="session-icon-moon"></i>
+                                    Romantic Dinner
+                                </span>
+                                <span class="session-time">6:00 PM - 11:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="branch-phone">
+                            <i data-lucide="phone"></i>
+                            <span>+254 715 557 353</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location 2 -->
+                <div class="branch-card">
+                    <div class="branch-header">
+                        <i data-lucide="map-pin" class="branch-pin-icon"></i>
+                        <div>
+                            <h3>The Downtown Loft</h3>
+                            <p class="branch-addr">8th Floor, Westlands Heights, Westlands, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="branch-content">
+                        <p class="branch-desc">An industrial-chic penthouse kitchen. Entrance requires dialing a private
+                            number at the service elevator. Features skyline views and custom wood-grills.</p>
+
+                        <div class="sessions-list">
+                            <div class="session-row">
+                                <span class="session-label">
+                                    <i data-lucide="sun" class="session-icon-sun"></i>
+                                    Lunch Session
+                                </span>
+                                <span class="session-time">12:00 PM - 3:30 PM</span>
+                            </div>
+                            <div class="session-row active-dinner">
+                                <span class="session-label">
+                                    <i data-lucide="moon" class="session-icon-moon"></i>
+                                    Romantic Dinner
+                                </span>
+                                <span class="session-time">6:00 PM - 12:00 AM</span>
+                            </div>
+                        </div>
+                        <div class="branch-phone">
+                            <i data-lucide="phone"></i>
+                            <span>+254 720 037 349</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Form Section -->
+    <section class="reservation-section" id="reservation">
+        <!-- Floating Glow Effects behind the form card -->
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+
+        <div class="container container-narrow">
+            <div class="reservation-card reveal-on-scroll">
+                <div class="reservation-info text-center">
+                    <span class="section-tag">Reservations</span>
+                    <h2 class="section-title">Secure Your Table</h2>
+                    <p class="reservation-sub">Reservations open 30 days in advance. Recommended dress code: Smart
+                        Casual / Elegant.</p>
+                </div>
+
+                <form id="reservation-form" class="reservation-form" novalidate>
+                    <!-- Row 1: Name & Email -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="user" class="input-icon"></i>
+                                <input type="text" id="full-name" name="fullName" placeholder="Jane or John Doe"
+                                    required>
+                            </div>
+                            <span class="error-msg" id="name-error">Please enter your full name.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="mail" class="input-icon"></i>
+                                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                            </div>
+                            <span class="error-msg" id="email-error">Please enter a valid email address.</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Phone & Guests -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="phone" class="input-icon"></i>
+                                <input type="tel" id="phone" name="phone" placeholder="+254 700 000 000" required>
+                            </div>
+                            <span class="error-msg" id="phone-error">Please enter a valid phone number.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guests">Number of Guests</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="users" class="input-icon"></i>
+                                <select id="guests" name="guests" required>
+                                    <option value="" disabled selected>Select guest count</option>
+                                    <option value="1">1 Guest (Solo Culinary Journey)</option>
+                                    <option value="2" selected>2 Guests (Romantic Date Night)</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5">5 Guests</option>
+                                    <option value="6">6 Guests (Intimate Gathering)</option>
+                                    <option value="7">7 Guests</option>
+                                    <option value="8">8 Guests (Max Capacity)</option>
+                                </select>
+                            </div>
+                            <span class="error-msg" id="guests-error">Please select the number of guests.</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Location & Date -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Branch Location</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="map-pin" class="input-icon"></i>
+                                <select id="location" name="location" required>
+                                    <option value="" disabled selected>Choose location</option>
+                                    <option value="The Hidden Alley">The Hidden Alley (Kilimani)</option>
+                                    <option value="The Downtown Loft">The Downtown Loft (Westlands)</option>
+                                </select>
+                            </div>
+                            <span class="error-msg" id="location-error">Please choose a location.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Reservation Date</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="calendar" class="input-icon"></i>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <span class="error-msg" id="date-error">Please select a future date.</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Time Slot (Dynamic Based on Location/Date) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="time-slot">Time Slot</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="clock" class="input-icon"></i>
+                                <select id="time-slot" name="timeSlot" required disabled>
+                                    <option value="" disabled selected>Select location & date first</option>
+                                </select>
+                            </div>
+                            <span class="error-msg" id="time-error">Please select an available session time slot.</span>
+                            <div class="session-indicator" id="session-indicator"></div>
+                        </div>
+                    </div>
+
+                    <!-- Special Notes -->
+                    <div class="form-group">
+                        <label for="notes">Special Notes (Optional)</label>
+                        <div class="input-wrapper input-textarea-wrapper">
+                            <i data-lucide="message-square" class="input-icon textarea-icon"></i>
+                            <textarea id="notes" name="notes" rows="3"
+                                placeholder="Let us know if it's an anniversary, a special date, or if you have food allergies..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary submit-btn">
+                        <span>Confirm Reservation</span>
+                        <i data-lucide="calendar-check"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="success-modal-overlay" id="success-modal">
+        <div class="success-modal-card">
+            <div class="modal-success-badge">
+                <i data-lucide="check-circle" class="success-check-icon"></i>
+            </div>
+            <h3>Reservation Confirmed</h3>
+            <p class="modal-sub">We’ve locked in your table at Grill next Door. A confirmation email with password keys
+                has been dispatched.</p>
+
+            <div class="reservation-summary">
+                <div class="summary-item" id="sum-ref-row" style="display:none;">
+                    <span class="sum-label">Booking Ref</span>
+                    <span class="sum-value sum-highlight" id="sum-booking-ref">—</span>
+                </div>
+                <div class="summary-item" id="sum-table-row" style="display:none;">
+                    <span class="sum-label">Table Assigned</span>
+                    <span class="sum-value sum-highlight" id="sum-table">—</span>
+                </div>
+                <div class="summary-item">
+                    <span class="sum-label">Guest Name</span>
+                    <span class="sum-value" id="sum-name">Jane Doe</span>
+                </div>
+                <div class="summary-item">
+                    <span class="sum-label">Location</span>
+                    <span class="sum-value" id="sum-location">The Hidden Alley</span>
+                </div>
+                <div class="summary-item">
+                    <span class="sum-label">Date &amp; Time</span>
+                    <span class="sum-value" id="sum-datetime">May 24, 2026 at 7:30 PM</span>
+                </div>
+                <div class="summary-item">
+                    <span class="sum-label">Party Size</span>
+                    <span class="sum-value" id="sum-guests">2 Guests</span>
+                </div>
+            </div>
+
+            <!-- Speakeasy Entrance Note -->
+            <div class="speakeasy-notice">
+                <div class="notice-header">
+                    <i data-lucide="key" class="notice-key-icon"></i>
+                    <span>Entry Instructions</span>
+                </div>
+                <p id="speakeasy-entry-msg">Please enter through the cozy front cafe. Knock three times on the bookshelf
+                    next to the fireplace. Code phrase: <strong>"The fire is warm tonight."</strong></p>
+            </div>
+
+            <button class="btn btn-primary close-modal-btn" id="close-modal">
+                <span>Excellent</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col-brand">
+                    <h3 class="footer-logo">Grill next Door</h3>
+                    <p class="footer-brand-desc">By day a cozy neighborhood kitchen. By night a sensory fireplace dinner
+                        speakeasy. Experience culinary secrets in an intimate space designed for date nights.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+                        <a href="#" aria-label="Yelp"><i data-lucide="award"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col-links">
+                    <h4>The Experience</h4>
+                    <ul>
+                        <li><a href="#concept">Our Story</a></li>
+                        <li><a href="#menu">The Grill Menu</a></li>
+                        <li><a href="#branches">Locations</a></li>
+                        <li><a href="#reservation">Table Booking</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col-contact">
+                    <h4>Reach Us</h4>
+                    <p><i data-lucide="mail"></i> secret@grillnextdoor.com</p>
+                    <p><i data-lucide="phone"></i> +254 715 557 353</p>
+                    <p><i data-lucide="shield-check"></i> Private dining bookings available upon request.</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Grill next Door. All Rights Reserved. Crafted with care for couples & gastronomes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js?v=2" type="module"></script>
+</body>
+
+</html>
