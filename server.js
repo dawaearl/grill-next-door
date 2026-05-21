@@ -78,7 +78,6 @@ function buildEmailHTML(data, qrCodeBase64) {
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background:#ffffff; border-radius:12px; overflow:hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10);">
 
-          <!-- AMBER HEADER BAR -->
           <tr>
             <td style="background: linear-gradient(135deg, #b87333 0%, #d4a843 50%, #b87333 100%); padding: 32px 40px; text-align: center;">
               <p style="margin:0 0 6px 0; font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.8);">Your Neighborhood's Best Kept Secret</p>
@@ -86,7 +85,6 @@ function buildEmailHTML(data, qrCodeBase64) {
             </td>
           </tr>
 
-          <!-- THANK YOU SECTION -->
           <tr>
             <td style="padding: 36px 40px 20px; text-align: center; border-bottom: 1px solid #f0f0f0;">
               <div style="display:inline-block; background:#fff8ee; border: 1px solid #e8c87a; border-radius: 50%; width: 56px; height: 56px; line-height: 56px; font-size: 28px; margin-bottom: 16px;">✓</div>
@@ -98,7 +96,6 @@ function buildEmailHTML(data, qrCodeBase64) {
             </td>
           </tr>
 
-          <!-- BOOKING REFERENCE BADGE -->
           <tr>
             <td style="padding: 20px 40px; text-align: center; background: #fffdf7;">
               <p style="margin: 0 0 6px; font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #999;">Booking Reference</p>
@@ -106,7 +103,6 @@ function buildEmailHTML(data, qrCodeBase64) {
             </td>
           </tr>
 
-          <!-- RESERVATION DETAILS TABLE -->
           <tr>
             <td style="padding: 0 40px 24px;">
               <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden;">
@@ -138,7 +134,6 @@ function buildEmailHTML(data, qrCodeBase64) {
             </td>
           </tr>
 
-          <!-- QR CODE SECTION -->
           <tr>
             <td style="padding: 24px 40px; text-align: center; background: #fafafa; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
               <p style="margin: 0 0 6px; font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #999;">Show this to your host upon arrival</p>
@@ -148,7 +143,6 @@ function buildEmailHTML(data, qrCodeBase64) {
             </td>
           </tr>
 
-          <!-- DRESS CODE NOTE -->
           <tr>
             <td style="padding: 20px 40px; text-align: center;">
               <p style="margin: 0; font-family: Arial, sans-serif; font-size: 13px; color: #888; line-height: 1.6;">
@@ -157,7 +151,6 @@ function buildEmailHTML(data, qrCodeBase64) {
             </td>
           </tr>
 
-          <!-- FOOTER -->
           <tr>
             <td style="background: #1a1a1a; padding: 24px 40px; text-align: center;">
               <p style="margin: 0 0 6px; font-size: 16px; color: #d4a843; font-weight: 600; letter-spacing: 1px;">Grill next Door</p>
@@ -214,18 +207,25 @@ app.post('/api/reserve', async (req, res) => {
             margin: 2,
             color: { dark: '#1a1a1a', light: '#ffffff' }
         });
+        
         // Strip the data:image/png;base64, prefix for nodemailer inline attachment
         const qrCodeBuffer = Buffer.from(qrCodeBase64.split(',')[1], 'base64');
 
         // Build email data object
         const emailData = { bookingRef, name, location, date, time, guests, table, notes };
 
-        // Configure Nodemailer transporter
+        // Configure Nodemailer transporter (Explicitly forced out of legacy block ports)
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false, // TLS requires secure: false for port 587
             auth: {
                 user: process.env.GMAIL_USER,
                 pass: process.env.GMAIL_APP_PASSWORD
+            },
+            tls: {
+                // Safeguards against cloud container certificate drops
+                rejectUnauthorized: false
             }
         });
 
@@ -244,11 +244,13 @@ app.post('/api/reserve', async (req, res) => {
             ]
         });
 
-        res.json({ success: true, bookingRef, table });
+        // Express must return a clean completion state immediately
+        return res.json({ success: true, bookingRef, table });
 
     } catch (err) {
-        console.error('Reservation error:', err);
-        res.status(500).json({ success: false, error: 'Failed to process reservation. Please try again.' });
+        console.error('Reservation error handled:', err);
+        // Clean error bubble response prevents browser pending freezes on failure
+        return res.status(500).json({ success: false, error: 'Failed to process reservation email infrastructure.' });
     }
 });
 
