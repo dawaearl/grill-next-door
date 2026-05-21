@@ -380,6 +380,10 @@ function renderMenu(category) {
 // Reservation Form Logic (Dynamic hours, slots, validation)
 // ==========================================================================
 
+const API_BASE_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8000"
+    : "";
+
 const LOCATION_SESSIONS = {
     "The Hidden Alley": {
         lunch: { start: 12, end: 15.5, label: "Lunch Session (12:00 PM - 3:30 PM)" },
@@ -533,7 +537,7 @@ function initReservationForm() {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/api/reserve", {
+            const response = await fetch(`${API_BASE_URL}/api/reserve`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
