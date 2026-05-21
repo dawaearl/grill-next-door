@@ -29,7 +29,7 @@ const MENU_DATA = {
             name: "Whiskey-Glazed Pork Belly",
             price: "Ksh 1,400",
             description: "House-cured pork belly smoked for 12 hours, seared in cast iron, glazed with local single-malt whiskey and maple.",
-            image: "https://images.unsplash.com/photo-1623130101592-331d9fb4cde3?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600",
             tags: ["Chef's Special"]
         }
     ],
@@ -123,39 +123,22 @@ const MENU_DATA = {
 // ==========================================================================
 
 const init = () => {
-    // Initialize Lucide Icons
     if (window.lucide) {
         window.lucide.createIcons();
     }
-
-    // Initialize Scroll Reveal
     initScrollReveal();
-
-    // Initialize Speakeasy Toggle
     initSpeakeasyToggle();
-
-    // Initialize Menu Tabs and Default Page
     renderMenu("starters");
     initMenuTabs();
-
-    // Initialize Reservation Form Constraints & Listeners
     initReservationForm();
 };
 
-// Initialization trigger moved to the bottom of the file to prevent Temporal Dead Zone errors.
-
-// ==========================================================================
-// Scroll Reveal Observer
-// ==========================================================================
-
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(".reveal-on-scroll");
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("revealed");
-                // Stop observing once animated
                 observer.unobserve(entry.target);
             }
         });
@@ -163,13 +146,8 @@ function initScrollReveal() {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     });
-
     revealElements.forEach(el => observer.observe(el));
 }
-
-// ==========================================================================
-// Speakeasy Ambiance Mode (The WOW factor)
-// ==========================================================================
 
 let emberInterval = null;
 
@@ -177,15 +155,11 @@ function initSpeakeasyToggle() {
     const toggleBtns = document.querySelectorAll(".speakeasy-toggle");
     const body = document.body;
 
-    // Hero elements for crossfade
     const bgCozy = document.querySelector(".hero-bg.bg-cozy");
     const bgSpeakeasy = document.querySelector(".hero-bg.bg-speakeasy");
-
-    // Concept section elements for crossfade
     const imgCozy = document.querySelector(".concept-image-container .img-cozy");
     const imgSpeakeasy = document.querySelector(".concept-image-container .img-speakeasy");
 
-    // Check localStorage for saved mode
     const savedMode = localStorage.getItem("grill-next-door-mode");
     if (savedMode === "speakeasy") {
         enableSpeakeasyMode(body, null, bgCozy, bgSpeakeasy, imgCozy, imgSpeakeasy);
@@ -203,86 +177,71 @@ function initSpeakeasyToggle() {
         });
     });
 
-    // Mobile nav toggle
     const mobileToggle = document.getElementById("mobile-toggle");
     const mobileNav = document.getElementById("mobile-nav");
 
-    mobileToggle.addEventListener("click", () => {
-        mobileNav.classList.toggle("active");
-        if (mobileNav.classList.contains("active")) {
-            mobileToggle.innerHTML = '<i data-lucide="x"></i>';
-        } else {
-            mobileToggle.innerHTML = '<i data-lucide="menu"></i>';
-        }
-        window.lucide.createIcons();
-    });
-
-    // Close mobile nav when clicking a link
-    mobileNav.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            mobileNav.classList.remove("active");
-            mobileToggle.innerHTML = '<i data-lucide="menu"></i>';
+    if (mobileToggle && mobileNav) {
+        mobileToggle.addEventListener("click", () => {
+            mobileNav.classList.toggle("active");
+            if (mobileNav.classList.contains("active")) {
+                mobileToggle.innerHTML = '<i data-lucide="x"></i>';
+            } else {
+                mobileToggle.innerHTML = '<i data-lucide="menu"></i>';
+            }
             window.lucide.createIcons();
         });
-    });
+
+        mobileNav.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileNav.classList.remove("active");
+                mobileToggle.innerHTML = '<i data-lucide="menu"></i>';
+                window.lucide.createIcons();
+            });
+        });
+    }
 }
 
 function enableSpeakeasyMode(body, btn, bgCozy, bgSpeakeasy, imgCozy, imgSpeakeasy) {
     body.classList.replace("storefront-mode", "speakeasy-mode");
     localStorage.setItem("grill-next-door-mode", "speakeasy");
-
-    // Crossfade Backgrounds
     if (bgCozy && bgSpeakeasy) {
         bgCozy.classList.remove("active");
         bgSpeakeasy.classList.add("active");
     }
-
-    // Crossfade Story Images
     if (imgCozy && imgSpeakeasy) {
         imgCozy.classList.remove("active");
         imgSpeakeasy.classList.add("active");
     }
-
-    // Start Floating Embers
     startEmberRain();
 }
 
 function disableSpeakeasyMode(body, btn, bgCozy, bgSpeakeasy, imgCozy, imgSpeakeasy) {
     body.classList.replace("speakeasy-mode", "storefront-mode");
     localStorage.setItem("grill-next-door-mode", "cozy");
-
-    // Crossfade Backgrounds
     if (bgCozy && bgSpeakeasy) {
         bgSpeakeasy.classList.remove("active");
         bgCozy.classList.add("active");
     }
-
-    // Crossfade Story Images
     if (imgCozy && imgSpeakeasy) {
         imgSpeakeasy.classList.remove("active");
         imgCozy.classList.add("active");
     }
-
-    // Stop Floating Embers
     stopEmberRain();
 }
 
 function startEmberRain() {
     const container = document.getElementById("ember-container");
     if (!container) return;
-
-    // Clean old ones
     container.innerHTML = "";
 
     emberInterval = setInterval(() => {
         const ember = document.createElement("div");
         ember.classList.add("ember");
 
-        // Random placement parameters
         const startX = Math.random() * window.innerWidth;
-        const size = Math.random() * 4 + 2; // 2px to 6px
-        const duration = Math.random() * 6 + 4; // 4s to 10s
-        const drift = (Math.random() * 100 - 50) + "px"; // drift left/right
+        const size = Math.random() * 4 + 2;
+        const duration = Math.random() * 6 + 4;
+        const drift = (Math.random() * 100 - 50) + "px";
         const delay = Math.random() * 2;
 
         ember.style.left = startX + "px";
@@ -294,7 +253,6 @@ function startEmberRain() {
 
         container.appendChild(ember);
 
-        // Remove after animation finishes to prevent DOM bloating
         setTimeout(() => {
             ember.remove();
         }, (duration + delay) * 1000);
@@ -310,22 +268,12 @@ function stopEmberRain() {
     if (container) container.innerHTML = "";
 }
 
-// ==========================================================================
-// Dynamic Tabbed Menu Section
-// ==========================================================================
-
 function initMenuTabs() {
     const tabs = document.querySelectorAll("#menu-tabs .menu-tab");
-
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
-            // Remove active from all tabs
             tabs.forEach(t => t.classList.remove("active"));
-
-            // Add active to current
             tab.classList.add("active");
-
-            // Get category and render with smooth fade-in
             const category = tab.getAttribute("data-category");
             renderMenu(category);
         });
@@ -335,8 +283,6 @@ function initMenuTabs() {
 function renderMenu(category) {
     const grid = document.getElementById("menu-grid");
     if (!grid) return;
-
-    // Clear current items
     grid.innerHTML = "";
 
     const items = MENU_DATA[category] || [];
@@ -346,7 +292,6 @@ function renderMenu(category) {
         itemEl.classList.add("menu-item");
         itemEl.style.animationDelay = `${index * 0.1}s`;
 
-        // Tags rendering
         let tagsHtml = "";
         if (item.tags && item.tags.length > 0) {
             item.tags.forEach(tag => {
@@ -371,19 +316,16 @@ function renderMenu(category) {
                 </div>
             </div>
         `;
-
         grid.appendChild(itemEl);
     });
 }
 
 // ==========================================================================
-// Reservation Form Logic (Dynamic hours, slots, validation)
+// Safe Production API Dynamic URL Core Setup
 // ==========================================================================
-
-const API_BASE_URL = import.meta.env?.VITE_API_URL
-    || ((window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-        ? "http://localhost:8000"
-        : "https://grill-next-door.onrender.com");
+const API_BASE_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8000"
+    : "https://grill-next-door-backend.onrender.com";
 
 const LOCATION_SESSIONS = {
     "The Hidden Alley": {
@@ -405,23 +347,16 @@ function initReservationForm() {
     const timeSelect = document.getElementById("time-slot");
     const sessionIndicator = document.getElementById("session-indicator");
 
-    // Restrict Date Input to Today and Future Dates (Up to 30 days)
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
-    const minDateStr = `${yyyy}-${mm}-${dd}`;
-
-    dateInput.min = minDateStr;
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
 
     const maxDate = new Date();
     maxDate.setDate(today.getDate() + 30);
-    const max_yyyy = maxDate.getFullYear();
-    const max_mm = String(maxDate.getMonth() + 1).padStart(2, '0');
-    const max_dd = String(maxDate.getDate()).padStart(2, '0');
-    dateInput.max = `${max_yyyy}-${max_mm}-${max_dd}`;
+    dateInput.max = `${maxDate.getFullYear()}-${String(maxDate.getMonth() + 1).padStart(2, '0')}-${String(maxDate.getDate()).padStart(2, '0')}`;
 
-    // Enable/Update Time slots dynamically
     const updateTimeSlots = () => {
         const locationVal = locationSelect.value;
         const dateVal = dateInput.value;
@@ -441,7 +376,6 @@ function initReservationForm() {
         const isToday = dateSelected.toDateString() === today.toDateString();
         const currentHour = today.getHours() + (today.getMinutes() / 60);
 
-        // Helper to format decimal time to readable standard string
         const getFormattedTime = (hoursDecimal) => {
             const h = Math.floor(hoursDecimal);
             const m = Math.round((hoursDecimal - h) * 60);
@@ -453,32 +387,23 @@ function initReservationForm() {
 
         let addedSlotsCount = 0;
 
-        // Generate Lunch Slots
         const lunchSess = sessions.lunch;
         for (let t = lunchSess.start; t < lunchSess.end; t += 0.5) {
-            // If today, filter out past slots
             if (isToday && t <= currentHour + 0.5) continue;
-
-            const optText = `${getFormattedTime(t)} - Lunch Session`;
-            const optVal = getFormattedTime(t);
             const opt = document.createElement("option");
-            opt.value = optVal;
-            opt.textContent = optText;
+            opt.value = getFormattedTime(t);
+            opt.textContent = `${getFormattedTime(t)} - Lunch Session`;
             opt.dataset.session = "lunch";
             timeSelect.appendChild(opt);
             addedSlotsCount++;
         }
 
-        // Generate Dinner Slots
         const dinnerSess = sessions.dinner;
         for (let t = dinnerSess.start; t < dinnerSess.end; t += 0.5) {
             if (isToday && t <= currentHour + 0.5) continue;
-
-            const optText = `${getFormattedTime(t)} - Romantic Dinner`;
-            const optVal = getFormattedTime(t);
             const opt = document.createElement("option");
-            opt.value = optVal;
-            opt.textContent = optText;
+            opt.value = getFormattedTime(t);
+            opt.textContent = `${getFormattedTime(t)} - Romantic Dinner`;
             opt.dataset.session = "dinner";
             timeSelect.appendChild(opt);
             addedSlotsCount++;
@@ -493,13 +418,11 @@ function initReservationForm() {
     locationSelect.addEventListener("change", updateTimeSlots);
     dateInput.addEventListener("change", updateTimeSlots);
 
-    // Watch time slot selection to show custom helper labels
     timeSelect.addEventListener("change", () => {
         const selectedOption = timeSelect.options[timeSelect.selectedIndex];
         const session = selectedOption.dataset.session;
-
         sessionIndicator.style.display = "flex";
-        sessionIndicator.className = "session-indicator"; // reset classes
+        sessionIndicator.className = "session-indicator";
 
         if (session === "lunch") {
             sessionIndicator.classList.add("lunch");
@@ -511,17 +434,13 @@ function initReservationForm() {
         window.lucide.createIcons();
     });
 
-    // Form submission validation
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const isValid = validateForm();
-        if (!isValid) return;
+        if (!validateForm()) return;
 
         const submitBtn = form.querySelector(".submit-btn");
         const originalBtnHTML = submitBtn.innerHTML;
 
-        // Show loading state
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span>Sending Confirmation...</span><i data-lucide="loader" style="animation: spin 1s linear infinite;"></i>`;
         window.lucide.createIcons();
@@ -543,17 +462,14 @@ function initReservationForm() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
-
             const result = await response.json();
-
             if (result.success) {
                 showSuccessModal(result.bookingRef, result.table);
             } else {
-                showApiError(result.error || "Reservation failed. Please try again.");
+                showApiError(result.error || "Reservation failed.");
             }
         } catch (err) {
-            console.error("Reservation API error:", err);
-            showApiError("Could not reach the reservation server. Please check your connection and try again.");
+            showApiError("Could not reach the reservation server. Please try again.");
         } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnHTML;
@@ -561,7 +477,6 @@ function initReservationForm() {
         }
     });
 
-    // Helper: show inline API error
     function showApiError(message) {
         let errEl = document.getElementById("api-error-msg");
         if (!errEl) {
@@ -574,24 +489,14 @@ function initReservationForm() {
         setTimeout(() => errEl.remove(), 6000);
     }
 
-    // Clean validation errors on input change
-    const inputs = form.querySelectorAll("input, select, textarea");
-    inputs.forEach(input => {
-        input.addEventListener("input", () => {
-            const group = input.closest(".form-group");
-            if (group) group.classList.remove("has-error");
-        });
-        input.addEventListener("change", () => {
-            const group = input.closest(".form-group");
-            if (group) group.classList.remove("has-error");
-        });
+    form.querySelectorAll("input, select, textarea").forEach(input => {
+        input.addEventListener("input", () => input.closest(".form-group")?.classList.remove("has-error"));
+        input.addEventListener("change", () => input.closest(".form-group")?.classList.remove("has-error"));
     });
 }
 
 function validateForm() {
     let isValid = true;
-
-    // Inputs to validate
     const nameInput = document.getElementById("full-name");
     const emailInput = document.getElementById("email");
     const phoneInput = document.getElementById("phone");
@@ -600,7 +505,6 @@ function validateForm() {
     const dateInput = document.getElementById("date");
     const timeSelect = document.getElementById("time-slot");
 
-    // Helper function to set errors
     const setError = (element, hasError) => {
         const group = element.closest(".form-group");
         if (!group) return;
@@ -612,78 +516,49 @@ function validateForm() {
         }
     };
 
-    // Validate Name
     setError(nameInput, nameInput.value.trim().length < 3);
-
-    // Validate Email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setError(emailInput, !emailRegex.test(emailInput.value.trim()));
-
-    // Validate Phone
-    const phoneRegex = /^\+?[\d\s\-()]{7,15}$/;
-    setError(phoneInput, !phoneRegex.test(phoneInput.value.trim()));
-
-    // Validate Guests
+    setError(emailInput, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim()));
+    setError(phoneInput, !/^\+?[\d\s\-()]{7,15}$/.test(phoneInput.value.trim()));
     setError(guestsSelect, !guestsSelect.value);
-
-    // Validate Location
     setError(locationSelect, !locationSelect.value);
 
-    // Validate Date
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const dateSelected = new Date(dateInput.value + "T00:00:00");
-    setError(dateInput, !dateInput.value || dateSelected < today);
-
-    // Validate Time Slot
+    setError(dateInput, !dateInput.value || new Date(dateInput.value + "T00:00:00") < today);
     setError(timeSelect, !timeSelect.value || timeSelect.disabled);
 
     return isValid;
 }
 
-// ==========================================================================
-// Success Modal & Speakeasy Easter Eggs
-// ==========================================================================
-
 function showSuccessModal(bookingRef, table) {
     const modal = document.getElementById("success-modal");
-
-    // Get form values
     const nameVal = document.getElementById("full-name").value;
     const locVal = document.getElementById("location").value;
     const dateVal = document.getElementById("date").value;
     const timeVal = document.getElementById("time-slot").value;
     const guestsVal = document.getElementById("guests").value;
 
-    // Format Date for Summary
-    const dateObj = new Date(dateVal + "T00:00:00");
-    const formattedDate = dateObj.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric"
+    const formattedDate = new Date(dateVal + "T00:00:00").toLocaleDateString("en-US", {
+        month: "long", day: "numeric", year: "numeric"
     });
 
-    // Populate modal values
     document.getElementById("sum-name").textContent = nameVal;
     document.getElementById("sum-location").textContent = locVal;
     document.getElementById("sum-datetime").textContent = `${formattedDate} at ${timeVal}`;
     document.getElementById("sum-guests").textContent = `${guestsVal} ${guestsVal === "1" ? "Guest" : "Guests"}`;
 
-    // Show booking reference if returned from backend
     const refEl = document.getElementById("sum-booking-ref");
     if (refEl && bookingRef) {
         refEl.textContent = bookingRef;
         refEl.closest(".summary-item").style.display = "flex";
     }
 
-    // Show table number if returned from backend
     const tableEl = document.getElementById("sum-table");
     if (tableEl && table) {
         tableEl.textContent = table;
         tableEl.closest(".summary-item").style.display = "flex";
     }
 
-    // Update speakeasy secrets depending on location
     const entryMsg = document.getElementById("speakeasy-entry-msg");
     if (locVal === "The Hidden Alley") {
         entryMsg.innerHTML = `Please enter through the cozy front cafe on Kilmarnock Road, Kilimani. Tap three times on the mahogany bookshelf next to the fireplace. Secret code: <strong>"The hearth fires burn bright tonight."</strong>`;
@@ -691,24 +566,16 @@ function showSuccessModal(bookingRef, table) {
         entryMsg.innerHTML = `Take the Westlands Heights service elevator to the 8th Floor in Westlands. Tap the brass door handle and state the code phrase: <strong>"Vesper sent me."</strong>`;
     }
 
-    // Trigger open
     modal.classList.add("active");
-
-    // Close button trigger
-    const closeBtn = document.getElementById("close-modal");
-    closeBtn.onclick = () => {
+    document.getElementById("close-modal").onclick = () => {
         modal.classList.remove("active");
-        // Reset the form
         document.getElementById("reservation-form").reset();
-        document.getElementById("time-slot").disabled = true;
-        document.getElementById("time-slot").innerHTML = `<option value="" disabled selected>Select location & date first</option>`;
-        document.getElementById("session-indicator").style.display = "none";
+        timeSelect.disabled = true;
+        timeSelect.innerHTML = `<option value="" disabled selected>Select location & date first</option>`;
+        sessionIndicator.style.display = "none";
     };
 }
 
-// ==========================================================================
-// Initialization & Global Event Listeners (Trigger)
-// ==========================================================================
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
 } else {

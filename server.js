@@ -256,8 +256,8 @@ app.post('/api/reserve', async (req, res) => {
 // Start Server
 // ==========================================================================
 
-app.listen(PORT, () => {
-    console.log(`\n🔥 Grill next Door Backend running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n🔥 Grill next Door Backend running on port ${PORT}`);
     console.log(`📧 Email sender: ${process.env.GMAIL_USER || '(not configured — set GMAIL_USER in .env)'}`);
     console.log(`🌐 QR codes link to: ${BASE_URL}/staff-scan.html\n`);
 });
